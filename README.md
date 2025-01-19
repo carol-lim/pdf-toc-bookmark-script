@@ -13,6 +13,9 @@ This script extracts the Table of Contents (ToC) from a PDF file and adds bookma
 - `PyMuPDF` library (install via `pip install pymupdf`)
 - PDF file that contains Table of Content page(s) which titles are hyperlinked to content pages correctly
 
+![image](https://github.com/user-attachments/assets/102b2033-3458-41b0-b9cd-9cdaf719ba8f)
+
+
 ## Usage
 
 1. Ensure you have Python 3.x installed on your system.
