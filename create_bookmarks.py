@@ -1,28 +1,60 @@
 import fitz  # PyMuPDF
 import re
 
-# Path to the input and output PDF files
-pdf_path = "Carnegie's The Advantages of Human Nature.pdf"
-output_path = "[Bookmark3]Carnegie's The Advantages of Human Nature.pdf"
+def get_user_input():
+    """Prompt user for input and handle exceptions."""
+    while True:
+        try:
+            # Get the PDF file path
+            pdf_path = input("Enter the path to the PDF file: ").strip()
+            
+            # Validate the file path
+            with open(pdf_path, "rb"):
+                pass  # Check if the file exists and is accessible
+            
+            # Get the TOC page range (1-based index)
+            toc_page_input = input(
+                "Enter the Table of Content page(s) (e.g., 2 for single page or 2-4 for multiple pages): "
+            ).strip()
+                        
+            # Parse the page input
+            if "-" in toc_page_input:
+                start, end = map(int, toc_page_input.split("-"))
+                if start <= 0 or end <= 0 or start > end:
+                    raise ValueError("Invalid range. Start and end must be positive, and start <= end.")
+                toc_page_range = range(start, end + 1)
+            else:
+                single_page = int(toc_page_input)
+                if single_page <= 0:
+                    raise ValueError("Invalid page number. Page must be positive.")
+                toc_page_range = range(single_page, single_page + 1)
+            
+            return pdf_path, toc_page_range  # Return as a range object
+        
+        except (ValueError, FileNotFoundError) as e:
+            print(f"Error: {e}. Please try again.") 
 
-# Specify the page number containing the table of contents (0-based index)
-toc_page_range = range(1, 3)   # Adjust this to match the ToC page in your PDF. End of the range is exclusive, so use 3 for pages 1 and 2
+# Get user inputs
+pdf_path, toc_page_range = get_user_input()
+
+# Specify the output file path
+output_path = f"[Bookmark4] {pdf_path.split('/')[-1]}"
 
 # Open the PDF
 doc = fitz.open(pdf_path)
 
 # Initialize bookmarks
 toc = []
-toc.append([1, "Menu", toc_page_range.start + 1])
+toc.append([1, "Menu", toc_page_range.start])  # Use 1-based index for bookmarks
+
 # Define regex patterns for "Part" and "Chapter" entries
 part_pattern = r"(?i)(Part \w+ .*?)$"
 chapter_pattern = r"(?i)(Chapter \d+ -.*?$)"
 
-# Loop through specified ToC pages
+# Loop through specified TOC pages
 for toc_page_number in toc_page_range:
-    toc_page = doc[toc_page_number]
+    toc_page = doc[toc_page_number - 1]  # Convert to 0-based index
     links = toc_page.get_links()
-    # print(f"Links on page {toc_page_number + 1}: {links}")
 
     # Loop through links and add bookmarks
     for link in links:
