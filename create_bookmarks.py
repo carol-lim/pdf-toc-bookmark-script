@@ -1,5 +1,6 @@
 import fitz  # PyMuPDF
 import re
+import os
 
 def get_user_input():
     """Prompt user for input and handle exceptions."""
@@ -34,11 +35,26 @@ def get_user_input():
         except (ValueError, FileNotFoundError) as e:
             print(f"Error: {e}. Please try again.") 
 
+def check_output_path(output_path):
+    """Check if the output file already exists and append a number if necessary."""
+    if os.path.exists(output_path):
+        base, ext = os.path.splitext(output_path)
+        counter = 1
+        while os.path.exists(f"{base} ({counter}){ext}"):
+            counter += 1
+        # Return the new output path with a number in parentheses
+        return f"{base} ({counter}){ext}"
+    else:
+        return output_path
+
 # Get user inputs
 pdf_path, toc_page_range = get_user_input()
 
 # Specify the output file path
-output_path = f"[Bookmark4] {pdf_path.split('/')[-1]}"
+output_path = f"[Bookmark] {pdf_path.split('/')[-1]}"
+
+# Check if the output path exists and handle overwriting
+output_path = check_output_path(output_path)
 
 # Open the PDF
 doc = fitz.open(pdf_path)
