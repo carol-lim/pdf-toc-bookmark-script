@@ -48,3 +48,5 @@ Bookmarks created and saved to [Bookmark] Carnegie's The Advantages of Human Nat
 ## License
 This script is open-source and available for personal or educational use. Feel free to contribute or modify the code.
 ```
+This `README.md` provides an overview of what the script does, its features, how to use it, and how to install the required dependencies. Feel free to adjust the wording or add additional sections if needed!
+```
