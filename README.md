@@ -11,6 +11,7 @@ This script extracts the Table of Contents (ToC) from a PDF file and adds bookma
 ## Prerequisites
 - Python 3.x
 - `PyMuPDF` library (install via `pip install pymupdf`)
+- PDF file that contains Table of Content page(s) which titles are hyperlinked to content pages correctly
 
 ## Usage
 
@@ -37,6 +38,9 @@ Enter the PDF file path: Carnegie's The Advantages of Human Nature.pdf
 Enter the TOC page range (e.g., 2-4): 2
 Bookmarks created and saved to [Bookmark] Carnegie's The Advantages of Human Nature.pdf
 ```
+
+![image](https://github.com/user-attachments/assets/aeabf9a5-b233-445b-afd2-871006ad1274)
+
 
 ## License
 This script is open-source and available for personal or educational use. Feel free to contribute or modify the code.
